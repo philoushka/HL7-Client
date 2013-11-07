@@ -10,27 +10,28 @@ namespace HL7_TCP.Web
     public class HL7Send
     {
         public HL7Send() { }
-                
+
         public string SendBatchMessages(Models.SendHL7ViewModel model)
         {
             var tcpSender = new HL7_TCP.TcpSender { DestinationServer = model.DestinationServer, Port = model.DestinationPort.Value };
 
             if (tcpSender.DestinationTestConnect())
             {
-
                 TcpSendResults results = SendMessages(model, tcpSender);
 
                 if (results.ExceptionDuringSend.IsNullOrEmpty())
                 {
-                    return = "Successfully sent {0} message{2} to {1}.{4}Total time taken: {3}".FormatWith(model.NumMessages,
-                                                                                                                  model.DestinationDetails,
-                                                                                                                  (results.NumberMsgsSent > 1) ? "s" : "",
-                                                                                                                  results.TimeElapsed.ToReadableString(),
-                                                                                                                  Environment.NewLine);
+                    return "Successfully sent {0} message{2} to {1}.{4}Total time taken: {3}".FormatWith(model.NumMessages,
+                                                                                                         model.DestinationDetails,
+                                                                                                         (results.NumberMsgsSent > 1) ? "s" : "",
+                                                                                                         results.TimeElapsed.ToReadableString(),
+                                                                                                         Environment.NewLine);
                 }
                 else
                 {
-                    return "We had a problem sending message {0} to {1}.   {2}".FormatWith(results.NumberMsgsSent + 1, model.DestinationDetails, results.ExceptionDuringSend);
+                    return "We had a problem sending message {0} to {1}.   {2}".FormatWith(results.NumberMsgsSent + 1, 
+                                                                                            model.DestinationDetails, 
+                                                                                            results.ExceptionDuringSend);
                 }
             }
             else
