@@ -42,8 +42,8 @@ QRF|UPI||||9879594577^Regekhsot^Annabelle^Reg Only^F^19110408^PO Box 877^^Anytow
                 var tcpSender = new TcpSender { DestinationServer = txtEndpoint.Text.Trim(), DestinationPort = int.Parse(txtPort.Text.Trim()) };
                 for (int i = 1; i <= numMessagesToSend; i++)
                 {
-                    tcpSender.SendHL7(DefaultHL7Message);
-                    b.ReportProgress((int)((double)i / numMessagesToSend * 100));
+                    var response = tcpSender.SendHL7(DefaultHL7Message);
+                    b.ReportProgress((int)((double)i / numMessagesToSend * 100));                   
                 }
             });
 

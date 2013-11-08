@@ -2,10 +2,17 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Linq;
 using HL7_TCP.Extensions;
 
 namespace HL7_TCP
 {
+    public class TcpSendResult
+    {
+        public bool SuccessfulSend { get; set; }
+        public string Response { get; set; }
+    }
+
     public class TcpSender
     {
         private const string MsgTransmit = "\v{0}{1}\r";
@@ -28,24 +35,24 @@ namespace HL7_TCP
         /// </summary>
         /// <param name="hl7Message">The HL7 message you want to send.</param>
         /// <returns>Boolean successful send.</returns>
-        public bool SendHL7(string hl7Message)
+        public TcpSendResult SendHL7(string hl7Message)
         {
             try
             {
                 byte[] bytesToXmit = BuildBytesToTransmit(hl7Message);
                 using (Socket s = ConnectSocket(DestinationServer, DestinationPort))
                 {
-                    if (s == null) return false;
+                    if (s == null) return new TcpSendResult { SuccessfulSend = false };
                     s.Send(bytesToXmit, bytesToXmit.Length, 0);
                     byte[] bytesReceived = new byte[1024];
                     int totalBytesReceived = s.Receive(bytesReceived, bytesReceived.Length, 0);
                     string hl7Response = Encoding.ASCII.GetString(bytesReceived, 0, totalBytesReceived);
-                    return DetermineSuccessFromResponseHL7Message(hl7Response);
+                    return new TcpSendResult { SuccessfulSend = true, Response = hl7Response };
                 }
             }
             catch (Exception)
             {
-                return false;
+                return new TcpSendResult { SuccessfulSend = false };
             }
         }
         /// <summary>
@@ -79,7 +86,7 @@ namespace HL7_TCP
             Socket s = null;
             IPHostEntry hostEntry = Dns.GetHostEntry(server);
 
-            foreach (IPAddress address in hostEntry.AddressList)
+            foreach (IPAddress address in hostEntry.AddressList.Where(x=>x.AddressFamily== AddressFamily.InterNetwork))
             {
                 IPEndPoint ipe = new IPEndPoint(address, port);
                 Socket tempSocket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
