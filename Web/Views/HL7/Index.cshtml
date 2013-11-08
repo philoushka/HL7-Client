@@ -1,18 +1,11 @@
 ﻿@model HL7_TCP.Web.Models.SendHL7ViewModel
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Send HL7 Messages";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    #hl7Message {
-        width: 100%;
-        
-    }
-
-    .nobullets {
-        list-style-type: none;
-    }
+<style type="text/css">
+    #hl7Message {width: 100%;}
+    .nobullets {list-style-type: none;}
 </style>
 <script type="text/javascript">
     $(function () {
@@ -24,79 +17,15 @@
         $("#destinationPort").ForceNumericOnly();
 
         SetHL7TextareaDefaultCaptionBehaviour();
-        
-        //SetInputCookieVal();
-
-        //LoadValuesFromCookies();
-
     });
-
-    //function SetInputCookieVal(inputID) {
-    //    $('#numMsgsToSend').change(function () {
-    //        setCookie($('#numMsgsToSend').attr('id'), $('#numMsgsToSend').val());
-    //    });
-
-    //    $('#destinationServer').change(function () {
-    //        setCookie($('#destinationServer').attr('id'), $('#destinationServer').val());
-    //    });
-
-    //    $('#destinationPort').change(function () {
-    //        setCookie($('#destinationPort').attr('id'), $('#destinationPort').val());
-    //    });
-
-    //    $('#hl7Message').change(function () {
-    //        setCookie($('#hl7Message').attr('id'), $('#hl7Message').val());
-    //    });
-    //}
-
-    //function LoadValuesFromCookies() {
-    //    $('#destinationServer').val(getCookie("destinationServer"));
-    //    $('#destinationPort').val(getCookie("destinationPort"));
-    //    $('#numMsgsToSend').val(getCookie("numMsgsToSend"));
-    //    $('#hl7Message').val(getCookie("hl7Message"));
-    //}
-
-    function SetHL7TextareaDefaultCaptionBehaviour() {
-        //var defaultText = "Paste Your HL7";
-        //if ($('#hl7Message').val().length == 0) {
-        //    $('#hl7Message').val(defaultText);
-        //}
-        //$('#hl7Message').each(function () {
-        //    $.data(this, 'default', this.value);
-        //}).focus(function () {
-        //    if (!$.data(this, 'edited') && this.value == defaultText) {
-        //        this.value = "";
-        //    }
-        //}).change(function () {
-        //    $.data(this, 'edited', this.value != "");
-        //}).blur(function () {
-        //    if (!$.data(this, 'edited')) {
-        //        this.value = $.data(this, 'default');
-        //    }
-        //});
-    }
-
-    //function setCookie(key, value) {
-    //    alert(value);
-    //    var expires = new Date();
-    //    expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
-    //    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-    //    alert(getCookie(key));
-    //}
-
-    //function getCookie(key) {
-    //    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
-    //    return keyValue ? keyValue[2] : null;
-    //}
 
     jQuery.fn.ForceNumericOnly = function () {
         return this.each(function () {
             $(this).keydown(function (e) {
                 var key = e.charCode || e.keyCode || 0;
-                // allow backspace, tab, delete, arrows, numbers and keypad numbers ONLY
-                // home, end,  
+                // allow backspace, tab, delete, arrows, numbers and keypad numbers ONLY, home, and end.
                 return (
-                    key == 8 || key == 9 ||    key == 190 ||
+                    key == 8 || key == 9 || key == 190 ||
                     (key >= 35 && key <= 40) ||
                     (key >= 48 && key <= 57) ||
                     (key >= 96 && key <= 105));
