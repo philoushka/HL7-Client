@@ -9,11 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HL7_TCP;
+
 namespace HL7_TCP.WinFormClient
 {
-    public partial class Form1 : Form
+    public partial class HL7Client : Form
     {
-        public Form1()
+        public HL7Client()
         {
             InitializeComponent();
         }
@@ -39,8 +40,8 @@ namespace HL7_TCP.WinFormClient
             {
                 BackgroundWorker b = o as BackgroundWorker;
 
-                var tcpSender = new TcpSender { DestinationServer = txtEndpoint.Text.Trim(), Port = int.Parse(txtPort.Text.Trim()) };
-                for (int i = 0; i < numMessagesToSend; i++)
+                var tcpSender = new TcpSender { DestinationServer = txtEndpoint.Text.Trim(), DestinationPort = int.Parse(txtPort.Text.Trim()) };
+                for (int i = 1; i <= numMessagesToSend; i++)
                 {
                     tcpSender.SendHL7(FindCandMsg);
                     b.ReportProgress((int)((double)i / numMessagesToSend * 100));

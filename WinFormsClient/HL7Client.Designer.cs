@@ -1,6 +1,6 @@
-﻿namespace empi_performance_load_testing
+﻿namespace HL7_TCP.WinFormClient
 {
-    partial class Form1
+    partial class HL7Client
     {
         /// <summary>
         /// Required designer variable.

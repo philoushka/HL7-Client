@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace empi_performance_load_testing
+namespace HL7_TCP.WinFormClient
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace empi_performance_load_testing
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new HL7Client());
         }
     }
 }

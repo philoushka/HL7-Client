@@ -44,16 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HL7 Client.cs">
+    <Compile Include="HL7Client.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HL7 Client.Designer.cs">
-      <DependentUpon>HL7 Client.cs</DependentUpon>
+    <Compile Include="HL7Client.Designer.cs">
+      <DependentUpon>HL7Client.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="HL7 Client.resx">
-      <DependentUpon>HL7 Client.cs</DependentUpon>
+    <EmbeddedResource Include="HL7Client.resx">
+      <DependentUpon>HL7Client.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
