@@ -3,48 +3,23 @@
     ViewBag.Title = "Send HL7 Messages";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style type="text/css">
-    #hl7Message {width: 100%;}
-    .nobullets {list-style-type: none;}
-</style>
-<script type="text/javascript">
-    $(function () {
-        var msg = "@ViewBag.Message";
-        if (msg) {
-            $("#msg").html(msg);
-        }
-        $("#numMsgsToSend").ForceNumericOnly();
-        $("#destinationPort").ForceNumericOnly();
-
-        SetHL7TextareaDefaultCaptionBehaviour();
-    });
-
-    jQuery.fn.ForceNumericOnly = function () {
-        return this.each(function () {
-            $(this).keydown(function (e) {
-                var key = e.charCode || e.keyCode || 0;
-                // allow backspace, tab, delete, arrows, numbers and keypad numbers ONLY, home, and end.
-                return (
-                    key == 8 || key == 9 || key == 190 ||
-                    (key >= 35 && key <= 40) ||
-                    (key >= 48 && key <= 57) ||
-                    (key >= 96 && key <= 105));
-            });
-        });
-    };
-
-</script>
+<link href="~/Content/HL7Send.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/HL7Send.js"></script>
+ 
 <h2>@Html.RouteLink("Send HL7 Messages", "Home")</h2>
-@using (Html.BeginRouteForm("SendHL7Message", FormMethod.Post))
-{
-    <ul class="nobullets">
-        <li>Destination Server:&nbsp;@Html.TextBoxFor(model => model.DestinationServer, new { id = "destinationServer" })</li>
-        <li>Destination Port:&nbsp;@Html.TextBoxFor(model => model.DestinationPort, new { id = "destinationPort" })</li>
-        <li>Num Messages To Send:&nbsp;@Html.TextBoxFor(model => model.NumMessages, new { id = "numMsgsToSend" })</li>
-        <li>@Html.TextAreaFor(model => model.HL7MessageToSend, new { id = "hl7Message", rows = "10" })</li>
-    </ul>
-    <br />
-    <input type="submit" value="Send It" />
-}
+<fieldset>
+    @using (Html.BeginRouteForm("SendHL7Message", FormMethod.Post))
+    {
+
+        <legend>Send A Batch Of HL7 Messages</legend>
+        <ul>
+            <li><label for="destinationServer">Destination Server:</label>@Html.TextBoxFor(model => model.DestinationServer, new { id = "destinationServer" })</li>
+            <li><label for="destinationPort">Destination Port:</label>@Html.TextBoxFor(model => model.DestinationPort, new { id = "destinationPort" })</li>
+            <li><label for="numMsgsToSend"># Messages To Send:</label>@Html.TextBoxFor(model => model.NumMessages, new { id = "numMsgsToSend" })</li>
+            <li><label for="hl7Message">HL7</label>@Html.TextAreaFor(model => model.HL7MessageToSend, new { id = "hl7Message", rows = "10" })</li>
+            <li><label for="submit"></label><input type="submit" id="submit" value="Send It" /></li>
+        </ul>
+    }
+</fieldset>
 <p></p>
 <span id="msg"></span>
