@@ -14,6 +14,11 @@ namespace HL7_TCP.WinFormClient
 {
     public partial class HL7Client : Form
     {
+        private const string DefaultHL7Message = @"MSH|^~\&|ADM|XXFOO|||20131105112744||QRY|foo.2013115122744467|D|2.1|
+QRD|20131105112744|R|I|FOO1|||99^RD|A0-B20130306201633940^9879594577|MPI|
+QRF|UPI||||9879594577^Regekhsot^Annabelle^Reg Only^F^19110408^PO Box 877^^Anytown^UT^98238-5125^255-644-8956^^^S|
+";
+
         public HL7Client()
         {
             InitializeComponent();
@@ -21,21 +26,15 @@ namespace HL7_TCP.WinFormClient
 
         private void btnFire_Click(object sender, EventArgs e)
         {
-            FireFindCand();
+            SendMessages();
         }
 
-
-        private void FirePersonRevised()
-        { }
-        private void FireGetDemo()
-        { }
-        private void FireFindCand()
+        private void SendMessages()
         {
-             
             BackgroundWorker bw = new BackgroundWorker { WorkerReportsProgress = true };
 
             int numMessagesToSend = int.Parse(txtNumToSend.Text);
-            
+
             bw.DoWork += new DoWorkEventHandler(delegate(object o, DoWorkEventArgs args)
             {
                 BackgroundWorker b = o as BackgroundWorker;
@@ -43,7 +42,7 @@ namespace HL7_TCP.WinFormClient
                 var tcpSender = new TcpSender { DestinationServer = txtEndpoint.Text.Trim(), DestinationPort = int.Parse(txtPort.Text.Trim()) };
                 for (int i = 1; i <= numMessagesToSend; i++)
                 {
-                    tcpSender.SendHL7(FindCandMsg);
+                    tcpSender.SendHL7(DefaultHL7Message);
                     b.ReportProgress((int)((double)i / numMessagesToSend * 100));
                 }
             });
@@ -63,17 +62,11 @@ namespace HL7_TCP.WinFormClient
             bw.RunWorkerAsync();
         }
 
-
-        private const string FindCandMsg = @"MSH|^~\&|ADM|XXFOO|||20131105112744||QRY|foo.2013115122744467|D|2.1|
-QRD|20131105112744|R|I|FOO1|||99^RD|A0-B20130306201633940^9879594577|MPI|
-QRF|UPI||||9879594577^Regekhsot^Annabelle^Reg Only^F^19110408^PO Box 877^^Anytown^UT^98238-5125^255-644-8956^^^S|
-";
-
         private void Form1_Load(object sender, EventArgs e)
         {
             lblProgress.Text = "";
 
-            txtMsg.Text = FindCandMsg;
+            txtMsg.Text = DefaultHL7Message;
         }
     }
 }
