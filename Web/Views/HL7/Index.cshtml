@@ -5,12 +5,17 @@
 }
 <link href="~/Content/HL7Send.css" rel="stylesheet" />
 <script type="text/javascript" src="~/Scripts/HL7Send.js"></script>
- 
+<script>
+    $(function () {
+        SetMessageToUser("@ViewBag.Message");
+        ForceNumericOnlyInputs();
+    });
+</script>
+
 <h2>@Html.RouteLink("Send HL7 Messages", "Home")</h2>
 <fieldset>
     @using (Html.BeginRouteForm("SendHL7Message", FormMethod.Post))
     {
-
         <legend>Send A Batch Of HL7 Messages</legend>
         <ul>
             <li><label for="destinationServer">Destination Server:</label>@Html.TextBoxFor(model => model.DestinationServer, new { id = "destinationServer" })</li>
