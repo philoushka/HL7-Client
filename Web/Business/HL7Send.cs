@@ -10,7 +10,7 @@ namespace HL7_TCP.Web
 
         public string SendBatchMessages(Models.SendHL7ViewModel model)
         {
-            var tcpSender = new HL7_TCP.TcpSender { DestinationServer = model.DestinationServer, Port = model.DestinationPort.Value };
+            var tcpSender = new HL7_TCP.TcpSender { DestinationServer = model.DestinationServer, DestinationPort = model.DestinationPort.Value };
 
             if (tcpSender.DestinationTestConnect())
             {
