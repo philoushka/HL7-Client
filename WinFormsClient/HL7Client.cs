@@ -22,15 +22,18 @@ QRF|UPI||||9879594577^Regekhsot^Annabelle^Reg Only^F^19110408^PO Box 877^^Anytow
         public HL7Client()
         {
             InitializeComponent();
+
         }
 
         private void btnFire_Click(object sender, EventArgs e)
         {
+            portsResults.Items.Clear();
             SendMessages();
         }
-
+      private  Dictionary<int, int> portResultsFromSender;
         private void SendMessages()
         {
+             portResultsFromSender = new Dictionary<int, int>();
             BackgroundWorker bw = new BackgroundWorker { WorkerReportsProgress = true };
 
             int numMessagesToSend = int.Parse(txtNumToSend.Text);
@@ -43,6 +46,14 @@ QRF|UPI||||9879594577^Regekhsot^Annabelle^Reg Only^F^19110408^PO Box 877^^Anytow
                 for (int i = 1; i <= numMessagesToSend; i++)
                 {
                     var response = tcpSender.SendHL7(DefaultHL7Message);
+
+                    if (portResultsFromSender.ContainsKey(response.Port) == false)
+                    { portResultsFromSender.Add(response.Port, 1); }
+                    else
+                    {
+                        portResultsFromSender[response.Port] += 1;
+                    }
+
                     b.ReportProgress((int)((double)i / numMessagesToSend * 100));                   
                 }
             });
@@ -57,6 +68,14 @@ QRF|UPI||||9879594577^Regekhsot^Annabelle^Reg Only^F^19110408^PO Box 877^^Anytow
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate(object o, RunWorkerCompletedEventArgs args)
             {
                 label1.Text = "Finished!";
+
+                portsResults.Visible = true;
+
+                foreach (var item in portResultsFromSender.OrderByDescending(x=>x.Value)  )
+                {
+                    portsResults.Items.Add(string.Format("Port {0}: {1} messages",item.Key, item.Value));
+                }
+                
             });
 
             bw.RunWorkerAsync();
@@ -65,7 +84,7 @@ QRF|UPI||||9879594577^Regekhsot^Annabelle^Reg Only^F^19110408^PO Box 877^^Anytow
         private void Form1_Load(object sender, EventArgs e)
         {
             lblProgress.Text = "";
-
+            portsResults.Visible = false;
             txtMsg.Text = DefaultHL7Message;
         }
     }

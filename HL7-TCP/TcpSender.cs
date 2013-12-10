@@ -11,12 +11,12 @@ namespace HL7_TCP
     {
         public bool SuccessfulSend { get; set; }
         public string Response { get; set; }
+        public int Port { get; set; }
     }
 
     public class TcpSender
     {
         private const string MsgTransmit = "\v{0}{1}\r";
-        private const int SocketReceiveTimeOutMilliseconds = 3000;
         private char FileSep = Convert.ToChar(28);
 
 
@@ -47,10 +47,10 @@ namespace HL7_TCP
                     byte[] bytesReceived = new byte[1024];
                     int totalBytesReceived = s.Receive(bytesReceived, bytesReceived.Length, 0);
                     string hl7Response = Encoding.ASCII.GetString(bytesReceived, 0, totalBytesReceived);
-                    return new TcpSendResult { SuccessfulSend = true, Response = hl7Response };
+                    return new TcpSendResult { SuccessfulSend = true, Response = hl7Response, Port = int.Parse(hl7Response.Split(' ').Last()) };
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return new TcpSendResult { SuccessfulSend = false };
             }
@@ -90,7 +90,7 @@ namespace HL7_TCP
             {
                 IPEndPoint ipe = new IPEndPoint(address, port);
                 Socket tempSocket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                tempSocket.ReceiveTimeout = SocketReceiveTimeOutMilliseconds;
+                tempSocket.ReceiveTimeout = Config.SocketReceiveTimeOutMilliseconds;
                 tempSocket.Connect(ipe);
 
                 if (tempSocket.Connected)

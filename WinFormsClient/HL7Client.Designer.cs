@@ -37,6 +37,7 @@
             this.txtEndpoint = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtPort = new System.Windows.Forms.TextBox();
+            this.portsResults = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // btnFire
@@ -73,7 +74,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProgress.AutoSize = true;
             this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgress.Location = new System.Drawing.Point(222, 100);
+            this.lblProgress.Location = new System.Drawing.Point(219, 100);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(102, 13);
             this.lblProgress.TabIndex = 10;
@@ -85,10 +86,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMsg.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMsg.Location = new System.Drawing.Point(12, 123);
+            this.txtMsg.Location = new System.Drawing.Point(12, 156);
             this.txtMsg.Multiline = true;
             this.txtMsg.Name = "txtMsg";
-            this.txtMsg.Size = new System.Drawing.Size(632, 424);
+            this.txtMsg.Size = new System.Drawing.Size(629, 344);
             this.txtMsg.TabIndex = 11;
             // 
             // label1
@@ -106,7 +107,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEndpoint.Location = new System.Drawing.Point(82, 12);
             this.txtEndpoint.Name = "txtEndpoint";
-            this.txtEndpoint.Size = new System.Drawing.Size(455, 20);
+            this.txtEndpoint.Size = new System.Drawing.Size(433, 20);
             this.txtEndpoint.TabIndex = 12;
             // 
             // label2
@@ -125,11 +126,21 @@
             this.txtPort.Size = new System.Drawing.Size(46, 20);
             this.txtPort.TabIndex = 14;
             // 
-            // Form1
+            // portsResults
+            // 
+            this.portsResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.portsResults.FormattingEnabled = true;
+            this.portsResults.Location = new System.Drawing.Point(521, 12);
+            this.portsResults.Name = "portsResults";
+            this.portsResults.Size = new System.Drawing.Size(120, 134);
+            this.portsResults.TabIndex = 17;
+            // 
+            // HL7Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(657, 559);
+            this.ClientSize = new System.Drawing.Size(654, 512);
+            this.Controls.Add(this.portsResults);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.label1);
@@ -139,8 +150,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtNumToSend);
             this.Controls.Add(this.btnFire);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "HL7Client";
+            this.Text = "HL7 Client";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -158,6 +169,7 @@
         private System.Windows.Forms.TextBox txtEndpoint;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtPort;
+        private System.Windows.Forms.ListBox portsResults;
     }
 }
 
